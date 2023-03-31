@@ -3,44 +3,40 @@ using System.Threading;
 
 namespace Life
 {
-    class Program
+    internal static class Program
     {
-        static Board board;
-        static private void Reset()
+        private static Board _board;
+
+        private static void Reset()
         {
-            board = new Board(
+            _board = new Board(
                 width: 50,
                 height: 20,
                 cellSize: 1,
                 liveDensity: 0.5);
         }
-        static void Render()
+
+        private static void Render()
         {
-            for (int row = 0; row < board.Rows; row++)
+            for (var row = 0; row < _board.Rows; row++)
             {
-                for (int col = 0; col < board.Columns; col++)   
+                for (var col = 0; col < _board.Columns; col++)
                 {
-                    var cell = board.Cells[col, row];
-                    if (cell.IsAlive)
-                    {
-                        Console.Write('*');
-                    }
-                    else
-                    {
-                        Console.Write(' ');
-                    }
+                    var cell = _board.Cells[col, row];
+                    Console.Write(cell.IsAlive ? '*' : ' ');
                 }
                 Console.Write('\n');
             }
         }
-        static void Main(string[] args)
+
+        private static void Main()
         {
             Reset();
             while(true)
             {
                 Console.Clear();
                 Render();
-                board.Advance();
+                _board.Advance();
                 Thread.Sleep(1000);
             }
         }
