@@ -10,11 +10,15 @@ namespace App
 
 		private static void Reset()
 		{
-			_board = new Board(
-				width: 50,
-				height: 20,
-				cellSize: 1,
-				liveDensity: 0.5);
+			var settings = new BoardSettings
+			{
+				Width = 50,
+				Height = 20,
+				CellSize = 1,
+				LiveDensity = 0.5
+			};
+
+			_board = BoardBuilder.Build(settings);
 		}
 
 		private static void Render()
