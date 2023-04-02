@@ -8,6 +8,5 @@ namespace Life
 		public uint Width { get; set; }
 		public uint Height { get; set; }
 		public uint CellSize { get; set; }
-		public double LiveDensity { get; set; }
 	}
 }
