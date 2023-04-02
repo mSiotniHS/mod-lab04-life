@@ -8,5 +8,11 @@
     <ItemGroup>
       <ProjectReference Include="..\Life\Life.csproj" />
     </ItemGroup>
+    
+    <ItemGroup>
+        <Content Include=".\assets\**">
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
+    </ItemGroup>
 
 </Project>

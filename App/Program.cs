@@ -1,4 +1,6 @@
 ﻿using System;
+using System.IO;
+using System.Text.Json;
 using System.Threading;
 using Life;
 
@@ -10,13 +12,9 @@ namespace App
 
 		private static void Reset()
 		{
-			var settings = new BoardSettings
-			{
-				Width = 50,
-				Height = 20,
-				CellSize = 1,
-				LiveDensity = 0.5
-			};
+			const string settingsPath = @".\assets\settings.json";
+			var rawSettings = File.ReadAllText(settingsPath);
+			var settings = JsonSerializer.Deserialize<BoardSettings>(rawSettings);
 
 			_board = BoardBuilder.Build(settings);
 		}
