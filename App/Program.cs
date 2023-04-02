@@ -16,7 +16,9 @@ namespace App
 			var rawSettings = File.ReadAllText(settingsPath);
 			var settings = JsonSerializer.Deserialize<BoardSettings>(rawSettings);
 
-			_board = BoardBuilder.Build(settings);
+			const double liveDensity = 0.5;
+
+			_board = BoardBuilder.Randomized(settings, liveDensity);
 		}
 
 		private static void Render()

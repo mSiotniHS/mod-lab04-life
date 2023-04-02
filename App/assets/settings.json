@@ -1,6 +1,5 @@
 ﻿{
   "Width": 50,
   "Height": 20,
-  "CellSize": 1,
-  "LiveDensity": 0.5
+  "CellSize": 1
 }
