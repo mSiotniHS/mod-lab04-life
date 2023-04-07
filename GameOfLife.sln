@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Life", "Life\Life.csproj", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "App", "App\App.csproj", "{3A65B350-18CE-49DF-967B-F79C420E5BA5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Life.Tests", "Life.Tests\Life.Tests.csproj", "{CA53D6FD-A202-4DA2-AA17-A70CBB091AAA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -44,5 +46,17 @@ Global
 		{3A65B350-18CE-49DF-967B-F79C420E5BA5}.Release|x64.Build.0 = Release|Any CPU
 		{3A65B350-18CE-49DF-967B-F79C420E5BA5}.Release|x86.ActiveCfg = Release|Any CPU
 		{3A65B350-18CE-49DF-967B-F79C420E5BA5}.Release|x86.Build.0 = Release|Any CPU
+		{CA53D6FD-A202-4DA2-AA17-A70CBB091AAA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CA53D6FD-A202-4DA2-AA17-A70CBB091AAA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CA53D6FD-A202-4DA2-AA17-A70CBB091AAA}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{CA53D6FD-A202-4DA2-AA17-A70CBB091AAA}.Debug|x64.Build.0 = Debug|Any CPU
+		{CA53D6FD-A202-4DA2-AA17-A70CBB091AAA}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{CA53D6FD-A202-4DA2-AA17-A70CBB091AAA}.Debug|x86.Build.0 = Debug|Any CPU
+		{CA53D6FD-A202-4DA2-AA17-A70CBB091AAA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CA53D6FD-A202-4DA2-AA17-A70CBB091AAA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CA53D6FD-A202-4DA2-AA17-A70CBB091AAA}.Release|x64.ActiveCfg = Release|Any CPU
+		{CA53D6FD-A202-4DA2-AA17-A70CBB091AAA}.Release|x64.Build.0 = Release|Any CPU
+		{CA53D6FD-A202-4DA2-AA17-A70CBB091AAA}.Release|x86.ActiveCfg = Release|Any CPU
+		{CA53D6FD-A202-4DA2-AA17-A70CBB091AAA}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
