@@ -44,6 +44,39 @@
 				cell.Advance();
 		}
 
+		public void AddFragment(Fragment fragment, (int, int) topLeftPoint)
+		{
+			var (x, y) = topLeftPoint;
+
+			for (var row = x; row < fragment.Rows; row++)
+			{
+				for (var column = y; column < fragment.Columns; column++)
+				{
+					Cells[row, column].IsAlive = fragment.Matrix[row][column];
+				}
+			}
+		}
+
+		public void AddFragment(Fragment fragment) =>
+			AddFragment(fragment, (0, 0));
+
+		public Fragment ToFragment()
+		{
+			var matrix = new bool[Rows][];
+
+			for (var row = 0; row < Rows; row++)
+			{
+				matrix[row] = new bool[Columns];
+
+				for (var column = 0; column < Columns; column++)
+				{
+					matrix[row][column] = Cells[row, column].IsAlive;
+				}
+			}
+
+			return new Fragment(matrix);
+		}
+
 		private void ConnectNeighbors()
 		{
 			for (var x = 0; x < Columns; x++)
