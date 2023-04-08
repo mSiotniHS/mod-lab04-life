@@ -5,21 +5,21 @@
 		public readonly Cell[,] Cells;
 		public readonly uint CellSize;
 
-		public int Columns => Cells.GetLength(0);
-		public int Rows => Cells.GetLength(1);
+		public int Rows => Cells.GetLength(0);
+		public int Columns => Cells.GetLength(1);
 
 		public Board(BoardSettings settings)
 		{
 			CellSize = settings.CellSize;
 
-			var columns = settings.Width / settings.CellSize;
 			var rows = settings.Height / settings.CellSize;
+			var columns = settings.Width / settings.CellSize;
 
-			Cells = new Cell[columns, rows];
+			Cells = new Cell[rows, columns];
 
-			for (var x = 0; x < columns; x++)
+			for (var x = 0; x < rows; x++)
 			{
-				for (var y = 0; y < rows; y++)
+				for (var y = 0; y < columns; y++)
 				{
 					Cells[x, y] = new Cell();
 				}
@@ -57,8 +57,7 @@
 			}
 		}
 
-		public void AddFragment(Fragment fragment) =>
-			AddFragment(fragment, (0, 0));
+		public void AddFragment(Fragment fragment) => AddFragment(fragment, (0, 0));
 
 		public Fragment ToFragment()
 		{
@@ -79,15 +78,25 @@
 
 		private void ConnectNeighbors()
 		{
-			for (var x = 0; x < Columns; x++)
-			{
-				for (var y = 0; y < Rows; y++)
-				{
-					var xL = (x > 0) ? x - 1 : Columns - 1;
-					var xR = (x < Columns - 1) ? x + 1 : 0;
+			int BeginBoundaryCheck(int max, int value) =>
+				value > 0
+					? value - 1
+					: max - 1;
 
-					var yT = (y > 0) ? y - 1 : Rows - 1;
-					var yB = (y < Rows - 1) ? y + 1 : 0;
+			int EndBoundaryCheck(int max, int value) =>
+				value < max - 1
+					? value + 1
+					: 0;
+
+			for (var x = 0; x < Rows; x++)
+			{
+				for (var y = 0; y < Columns; y++)
+				{
+					var xL = BeginBoundaryCheck(Rows, x);
+					var xR = EndBoundaryCheck(Rows, x);
+
+					var yT = BeginBoundaryCheck(Columns, y);
+					var yB = EndBoundaryCheck(Columns, y);
 
 					Cells[x, y].Neighbors.Add(Cells[xL, yT]);
 					Cells[x, y].Neighbors.Add(Cells[x, yT]);
