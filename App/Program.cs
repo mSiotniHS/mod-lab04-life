@@ -27,7 +27,7 @@ namespace App
 			{
 				for (var col = 0; col < _board.Columns; col++)
 				{
-					var cell = _board.Cells[col, row];
+					var cell = _board.Cells[row, col];
 					Console.Write(cell.IsAlive ? '█' : ' ');
 				}
 				Console.Write('\n');
