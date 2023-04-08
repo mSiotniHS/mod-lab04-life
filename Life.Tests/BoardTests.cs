@@ -48,5 +48,39 @@ namespace Life.Tests
 				Assert.Equal(expected.Matrix, actual.Matrix);
 			}
 		}
+
+		public class Advance
+		{
+			[Fact]
+			public void WorksCorrectly()
+			{
+				var fragment = Fragment.FromString("0010\n1010\n0100\n0000");
+				var board = new Board(new BoardSettings
+				{
+					Width = 4,
+					Height = 4,
+					CellSize = 1
+				});
+
+				board.AddFragment(fragment);
+				board.Advance();
+
+				const string expected1 = "0101\n0011\n0100\n0000";
+				var actual1 = board.ToFragment().ToString();
+				Assert.Equal(expected1, actual1);
+
+				board.Advance();
+
+				const string expected2 = "1001\n0101\n0010\n1010";
+				var actual2 = board.ToFragment().ToString();
+				Assert.Equal(expected2, actual2);
+
+				board.Advance();
+
+				const string expected3 = "0000\n0101\n1010\n1010";
+				var actual3 = board.ToFragment().ToString();
+				Assert.Equal(expected3, actual3);
+			}
+		}
 	}
 }
