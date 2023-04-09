@@ -19,6 +19,7 @@ namespace Life
 		public static Fragment FromString(string raw)
 		{
 			var matrix = raw
+				.TrimEnd(Environment.NewLine.ToCharArray())
 				.Split('\n')
 				.Select(row => row
 					.ToCharArray()
