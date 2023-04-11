@@ -20,7 +20,7 @@ namespace Life
 		{
 			var matrix = raw
 				.TrimEnd(Environment.NewLine.ToCharArray())
-				.Split('\n')
+				.Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.None)
 				.Select(row => row
 					.ToCharArray()
 					.Select(item => item switch
