@@ -34,24 +34,28 @@ namespace App
 			}
 		}
 
-		private static BoardSettings LoadSettings()
+		private static Settings LoadSettings()
 		{
-			BoardSettings settings;
+			Settings settings;
 			try
 			{
 				var rawSettings = File.ReadAllText(SettingsPath);
-				settings = JsonSerializer.Deserialize<BoardSettings>(rawSettings);
+				settings = JsonSerializer.Deserialize<Settings>(rawSettings);
 
 				Console.WriteLine("Файл с настройками найден.");
 			}
 			catch
 			{
 				Console.WriteLine("Возникла ошибка при чтении из файла. Использую стандартные настройки.");
-				settings = new BoardSettings
+				settings = new Settings
 				{
-					Width = 50,
-					Height = 20,
-					CellSize = 1
+					IterationCount = 10,
+					BoardSettings = new BoardSettings
+					{
+						Width = 50,
+						Height = 20,
+						CellSize = 1
+					}
 				};
 			}
 
@@ -63,8 +67,9 @@ namespace App
 			Console.WriteLine("Игра \"Жизнь\"\n");
 
 			var settings = LoadSettings();
+			var boardSettings = settings.BoardSettings;
 
-			_report = new Report(settings, GetShapesToFind());
+			_report = new Report(boardSettings, GetShapesToFind());
 
 			Console.WriteLine("Выберите действие:");
 			Console.WriteLine("1) Рандомно сгенерировать состояние");
@@ -85,19 +90,19 @@ namespace App
 
 				if (input.Key == ConsoleKey.D1)
 				{
-					_board = UI.GenerateStateRandomly(settings);
+					_board = UI.GenerateStateRandomly(boardSettings);
 					break;
 				}
 
 				if (input.Key == ConsoleKey.D2)
 				{
-					_board = UI.LoadState(settings, AssetsDir);
+					_board = UI.LoadState(boardSettings, AssetsDir);
 					break;
 				}
 
 				if (input.Key == ConsoleKey.D3 && saveFileExists)
 				{
-					_board = UI.LoadSave(settings, SavePath);
+					_board = UI.LoadSave(boardSettings, SavePath);
 					break;
 				}
 
@@ -108,7 +113,7 @@ namespace App
 			Render();
 			_report.Add(_board);
 
-			for (var i = 0; i < 10; i++)
+			for (var i = 0; i < settings.IterationCount; i++)
 			{
 				_board.Advance();
 

@@ -1,5 +1,8 @@
 ﻿{
-  "Width": 50,
-  "Height": 20,
-  "CellSize": 1
+  "IterationCount": 10,
+  "BoardSettings": {
+    "Width": 50,
+    "Height": 20,
+    "CellSize": 1
+  }
 }
