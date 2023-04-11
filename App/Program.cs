@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Globalization;
 using System.IO;
 using System.Text.Json;
 using System.Threading;
@@ -16,55 +15,6 @@ namespace App
 		private static readonly string SavePath = Path.Combine(OutDir, "save.txt");
 
 		private static Board _board;
-
-		private static void GenerateStateRandomly(BoardSettings settings)
-		{
-			Console.WriteLine("Введите плотность генерации (значение от 0 до 1, через точку):");
-			Console.Write("> ");
-
-			double liveDensity;
-
-			while (true)
-			{
-				var input = Console.ReadLine();
-				var successfulParse = double.TryParse(
-					input,
-					NumberStyles.Float,
-					CultureInfo.InvariantCulture,
-					out var parsed);
-
-				if (!successfulParse) continue;
-				if (parsed < 0 || parsed > 1) continue;
-
-				liveDensity = parsed;
-				break;
-			}
-
-			_board = BoardBuilder.Randomized(settings, liveDensity);
-		}
-
-		private static void LoadState(BoardSettings settings)
-		{
-			Console.WriteLine("Введите название файла:");
-			Console.Write("> ");
-
-			var fileName = Console.ReadLine();
-			var path = Path.Combine(AssetsDir, $"{fileName!}.txt");
-			var raw = File.ReadAllText(path);
-			var fragment = Fragment.FromString(raw);
-
-			_board = new Board(settings);
-			_board.AddFragment(fragment, (3, 3));
-		}
-
-		private static void LoadSave(BoardSettings settings)
-		{
-			var raw = File.ReadAllText(SavePath);
-			var fragment = Fragment.FromString(raw);
-
-			_board = new Board(settings);
-			_board.AddFragment(fragment);
-		}
 
 		private static void Render()
 		{
@@ -128,19 +78,19 @@ namespace App
 
 				if (input.Key == ConsoleKey.D1)
 				{
-					GenerateStateRandomly(settings);
+					_board = UI.GenerateStateRandomly(settings);
 					break;
 				}
 
 				if (input.Key == ConsoleKey.D2)
 				{
-					LoadState(settings);
+					_board = UI.LoadState(settings, AssetsDir);
 					break;
 				}
 
 				if (input.Key == ConsoleKey.D3 && saveFileExists)
 				{
-					LoadSave(settings);
+					_board = UI.LoadSave(settings, SavePath);
 					break;
 				}
 
