@@ -121,7 +121,7 @@ namespace App
 				Render();
 				_report.Add(_board);
 
-				Thread.Sleep(500);
+				Thread.Sleep(1000);
 			}
 
 			Directory.CreateDirectory(OutDir);
