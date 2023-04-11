@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
 using System.Threading;
 using Life;
+using Life.Analytics;
 
 namespace App
 {
@@ -12,9 +14,12 @@ namespace App
 		private const string OutDir = @".\out";
 
 		private static readonly string SettingsPath = Path.Combine(AssetsDir, "settings.json");
+		private static readonly string StillShapesPath = Path.Combine(AssetsDir, "still");
 		private static readonly string SavePath = Path.Combine(OutDir, "save.txt");
+		private static readonly string ReportPath = Path.Combine(OutDir, "report.json");
 
 		private static Board _board;
+		private static Report _report;
 
 		private static void Render()
 		{
@@ -25,7 +30,7 @@ namespace App
 					var cell = _board.Cells[row, col];
 					Console.Write(cell.IsAlive ? '█' : ' ');
 				}
-				Console.Write('\n');
+				Console.WriteLine();
 			}
 		}
 
@@ -58,6 +63,8 @@ namespace App
 			Console.WriteLine("Игра \"Жизнь\"\n");
 
 			var settings = LoadSettings();
+
+			_report = new Report(settings, GetShapesToFind());
 
 			Console.WriteLine("Выберите действие:");
 			Console.WriteLine("1) Рандомно сгенерировать состояние");
@@ -94,19 +101,42 @@ namespace App
 					break;
 				}
 
-				Console.WriteLine("Некорректный ввод");
+				return;
 			}
+
+			Console.Clear();
+			Render();
+			_report.Add(_board);
 
 			for (var i = 0; i < 10; i++)
 			{
+				_board.Advance();
+
 				Console.Clear();
 				Render();
-				_board.Advance();
-				Thread.Sleep(1000);
+				_report.Add(_board);
+
+				Thread.Sleep(500);
 			}
 
 			Directory.CreateDirectory(OutDir);
 			File.WriteAllText(SavePath, _board.ToFragment().ToString());
+			File.WriteAllText(ReportPath, JsonSerializer.Serialize(_report));
+		}
+
+		private static List<(string, Fragment)> GetShapesToFind()
+		{
+			var shapesToFind = new List<(string, Fragment)>();
+			var shapeFileNames = Directory.GetFiles(StillShapesPath, "*.txt", SearchOption.TopDirectoryOnly);
+			foreach (var shapeFileName in shapeFileNames)
+			{
+				var name = Path.GetFileNameWithoutExtension(shapeFileName);
+				var fragment = Fragment.FromString(File.ReadAllText(shapeFileName));
+
+				shapesToFind.Add((name, fragment));
+			}
+
+			return shapesToFind;
 		}
 	}
 }
